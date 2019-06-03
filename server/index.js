@@ -1,12 +1,14 @@
 const express=require('express');
+const mongoose=require('mongoose')
+const keys=require('./config/keys')
+require('./services/passport')
 const app=express();
-const passport =require('passport');
-const GoogleStrategy=require('passport-google-oauth20').Strategy
 
 app.get('/',(req,res)=>{
-    res.send({hi: 'there'})
+    res.send({hi: keys.googleClientID})
 })
 
-passport.use(new GoogleStrategy())
+mongoose.connect('keys.mongoURI')
+require('./routes/authRoutes')(app)
 
 app.listen(5000);
